@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMDAwIi8+CjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjEyIiBmaWxsPSIjZmZmIi8+CjxwYXRoIGQ9Ik0zMiAxOEMyOCAxOCAyNCAyMiAyNCAyNkMyNCAzMCAyOCAzNCAzMiAzNEMzNiAzNCA0MCAzMCA0MCAyNkM0MCAyMiAzNiAxOCAzMiAxOFoiIGZpbGw9IiNEMEFGMzciLz4KPHBhdGggZD0iTTI2IDI2QzI2IDI0IDI4IDIyIDMwIDIySDM0QzM2IDIyIDM4IDI0IDM4IDI2QzM4IDI4IDM2IDMwIDM0IDMwSDMwQzI4IDMwIDI2IDI4IDI2IDI2WiIgZmlsbD0iIzAwMCIvPgo8L3N2Zz4K">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Down To The Inks</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiBmaWxsPSIjMDAwIi8+CjxjaXJjbGUgY3g9IjMyIiBjeT0iMzIiIHI9IjEyIiBmaWxsPSIjZmZmIi8+CjxwYXRoIGQ9Ik0zMiAxOEMyOCAxOCAyNCAyMiAyNCAyNkMyNCAzMCAyOCAzNCAzMiAzNEMzNiAzNCA0MCAzMCA0MCAyNkM0MCAyMiAzNiAxOCAzMiAxOFoiIGZpbGw9IiNEMEFGMzciLz4KPHBhdGggZD0iTTI2IDI2QzI2IDI0IDI4IDIyIDMwIDIySDM0QzM2IDIyIDM4IDI0IDM4IDI2QzM4IDI4IDM2IDMwIDM0IDMwSDMwQzI4IDMwIDI2IDI4IDI2IDI2WiIgZmlsbD0iIzAwMCIvPgo8L3N2Zz4K">
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --text-color: rgb(245, 245, 220);
+            --bg-dark: rgba(0, 0, 0, 0.7);
+            --border-color: rgb(245, 245, 220);
+            --ink-color: #000000;
+            --blood-red: #8B0000;
+            --gold: #D4AF37;
+            --section-gold: #E6C35C;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: url('2025-11-07_13-07-33-photoaidcom-darken%20(1).png') center/cover fixed;
+            position: relative;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            font-family: 'Special Elite', cursive;
+        }
+
+        body.loaded { opacity: 1; }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: inherit;
+            filter: blur(2px) brightness(0.5);
+            z-index: -1;
+        }
+
+        /* Ink drip animations - улучшенные */
+        .ink-drip {
+            position: fixed;
+            top: -100px;
+            width: 60px;
+            height: 200px;
+            background: linear-gradient(to bottom, transparent 5%, var(--ink-color) 20%, var(--ink-color) 95%, transparent 100%);
+            clip-path: polygon(0 0, 100% 0, 85% 90%, 80% 100%, 20% 100%, 15% 90%);
+            animation: drip 20s linear infinite;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .ink-drip:nth-child(1) { left: 8%; animation-delay: 0s; }
+        .ink-drip:nth-child(2) { left: 25%; animation-delay: 7s; }
+        .ink-drip:nth-child(3) { left: 65%; animation-delay: 12s; }
+        .ink-drip:nth-child(4) { left: 88%; animation-delay: 5s; }
+
+        @keyframes drip {
+            0% { transform: translateY(-100px); opacity: 0; }
+            10% { opacity: 0.4; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(120vh); opacity: 0; }
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 60px;
+            background: #000;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            border-bottom: 2px solid var(--gold);
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        .nav-button {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border: 1px solid rgba(245, 245, 220, 0.3);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:hover {
+            background: #333;
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .language-switcher {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .language-button {
+            background: none;
+            border: 1px solid rgba(245, 245, 220, 0.3);
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-color);
+            font-size: 14px;
+            font-family: 'Special Elite', cursive;
+        }
+
+        .language-button:hover, .language-button.active {
+            background: #333;
+            border-color: var(--gold);
+        }
+
+        .flag {
+            width: 20px;
+            height: 15px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+
+        .title {
+            width: 90%;
+            max-width: 1800px;
+            height: 600px;
+            background: url('23967e8e-3300-40bc-b1d3-4a7ad067ed8f.png') center/contain no-repeat;
+            margin: 80px 0 -50px;
+            z-index: 4;
+            position: relative;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+        }
+
+        .content-container {
+            width: 80%;
+            max-width: 1200px;
+            background: var(--bg-dark);
+            border: 2px solid var(--border-color);
+            margin-bottom: 0;
+            padding: 40px;
+            position: relative;
+            z-index: 1;
+            border-radius: 10px;
+            margin-top: 0;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+            border-image: linear-gradient(45deg, var(--gold), var(--blood-red), var(--gold)) 1;
+        }
+
+        .content-container::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.5s ease;
+            animation: bounce 2s infinite;
+            z-index: 5;
+        }
+
+        .scroll-indicator:hover {
+            transform: translateX(-50%) scale(1.1);
+            background: rgba(30, 30, 30, 0.9);
+            border-color: var(--gold);
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .top-fade {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .section-title {
+            color: var(--text-color);
+            text-align: center;
+            font-size: 44px;
+            margin: 80px 0 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            border-bottom: 2px solid transparent;
+            padding-bottom: 15px;
+            font-family: 'Creepster', cursive;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            width: 60%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--section-gold), rgba(230, 195, 92, 0.3), transparent);
+        }
+
+        .section-text {
+            color: var(--text-color);
+            text-align: justify;
+            font-size: 34px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Special Elite', cursive;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--gold);
+            text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+            position: relative;
+        }
+
+        .section-divider {
+            height: 4px;
+            background: linear-gradient(90deg, transparent 0%, var(--section-gold) 50%, transparent 100%);
+            margin: 60px auto;
+            width: 60%;
+            position: relative;
+        }
+
+        .section-divider::before {
+            content: '✶';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--section-gold);
+            font-size: 24px;
+            text-shadow: 0 0 8px rgba(230, 195, 92, 0.6);
+            background: transparent;
+            padding: 0;
+        }
+
+        .ink-splash {
+            position: relative;
+            padding: 20px;
+            margin: 30px 0;
+        }
+
+        .ink-splash::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -10px; right: -10px; bottom: 0;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 15px;
+            z-index: -1;
+            border: 1px solid rgba(245, 245, 220, 0.2);
+        }
+
+        .ink-splash::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .screenshots-carousel {
+            position: relative;
+            width: 100%;
+            margin: 60px 0;
+            padding: 20px 0;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 2px solid var(--border-color);
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid rgba(245, 245, 220, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-image:hover { 
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid var(--border-color);
+            color: var(--text-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .carousel-button:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-50%) scale(1.1);
+            border-color: var(--gold);
+        }
+
+        .carousel-prev { left: 20px; }
+        .carousel-next { right: 20px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(245, 245, 220, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active, .carousel-dot:hover {
+            background: var(--gold);
+            transform: scale(1.2);
+        }
+
+        .download-button {
+            display: block;
+            width: 80%;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 25px 40px;
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            color: var(--text-color);
+            border: 3px solid var(--border-color);
+            border-radius: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-family: 'Creepster', cursive;
+            letter-spacing: 1px;
+        }
+
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.3), transparent);
+            transition: left 0.6s ease;
+            z-index: -1;
+        }
+
+        .download-button:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .download-button:hover::before { left: 100%; }
+        .download-button:active { transform: translateY(-2px); }
+
+        .download-button.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .download-button.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 20px; height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--text-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .system-requirements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .requirement-item {
+            background: rgba(30, 30, 30, 0.6);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(245, 245, 220, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .requirement-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .requirement-item:hover::before {
+            left: 100%;
+        }
+
+        .requirement-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .requirement-title {
+            color: var(--text-color);
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-family: 'Cinzel Decorative', cursive;
+        }
+
+        .requirement-value {
+            color: var(--text-color);
+            font-size: 20px;
+            line-height: 1.4;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .image-modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .image-modal.active { display: flex; }
+
+        .modal-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3);
+            cursor: default;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            color: var(--text-color);
+            font-size: 40px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 1001;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--gold);
+            transform: scale(1.1);
+        }
+
+        .zoom-info {
+            position: absolute;
+            bottom: 20px; left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-color);
+            font-size: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 1px solid var(--gold);
+        }
+
+        .image-modal.active .zoom-info { opacity: 1; }
+
+        /* Bendy-themed decorations */
+        .bendy-corner {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            z-index: 1;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .corner-tl {
+            top: 10px;
+            left: 10px;
+            border-top: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .corner-tr {
+            top: 10px;
+            right: 10px;
+            border-top: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        .corner-bl {
+            bottom: 10px;
+            left: 10px;
+            border-bottom: 3px solid var(--gold);
+            border-left: 3px solid var(--gold);
+        }
+
+        .corner-br {
+            bottom: 10px;
+            right: 10px;
+            border-bottom: 3px solid var(--gold);
+            border-right: 3px solid var(--gold);
+        }
+
+        .page-turn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--gold);
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .page-turn:hover {
+            transform: scale(1.1);
+            background: rgba(212, 175, 55, 0.2);
+        }
+
+        /* Мобильная адаптация */
+        @media (max-width: 768px) {
+            .navbar { height: 50px; gap: 10px; padding: 0 10px; }
+            .nav-button { font-size: 12px; padding: 6px 10px; }
+            .language-switcher { position: relative; right: auto; margin-left: auto; gap: 5px; }
+            .language-button { padding: 4px 8px; font-size: 12px; }
+            .flag { width: 16px; height: 12px; }
+            .title { width: 95%; height: 300px; margin: 70px 0 -30px; }
+            .content-container { width: 95%; padding: 20px 15px; border-width: 1px; }
+            .section-title { font-size: 28px; margin: 40px 0 25px; padding-bottom: 10px; }
+            .section-text { font-size: 18px; line-height: 1.5; margin-bottom: 25px; text-align: left; }
+            .scroll-indicator { width: 50px; height: 50px; top: -60px; }
+            .scroll-indicator::after { font-size: 20px; }
+            .section-divider { margin: 40px auto; width: 80%; }
+            .ink-splash { padding: 15px; margin: 20px 0; }
+            .ink-splash::before { left: -5px; right: -5px; border-radius: 10px; }
+            .screenshots-carousel { margin: 40px 0; padding: 15px 0; }
+            .carousel-container { border-radius: 10px; border-width: 1px; }
+            .carousel-slide { padding: 10px; }
+            .carousel-image { border-radius: 8px; }
+            .carousel-button { width: 45px; height: 45px; font-size: 18px; }
+            .carousel-prev { left: 10px; } .carousel-next { right: 10px; }
+            .carousel-dots { margin-top: 15px; }
+            .carousel-dot { width: 10px; height: 10px; }
+            .download-button { width: 90%; padding: 20px 25px; font-size: 20px; margin: 30px auto; border-width: 2px; }
+            .system-requirements { grid-template-columns: 1fr; gap: 20px; margin: 30px 0; }
+            .requirement-item { padding: 20px; }
+            .requirement-title { font-size: 20px; } .requirement-value { font-size: 16px; }
+            .modal-image { max-width: 95%; max-height: 80%; }
+            .modal-close { top: 10px; right: 10px; font-size: 30px; }
+            .zoom-info { font-size: 14px; padding: 8px 16px; bottom: 10px; }
+            .top-fade { height: 200px; }
+            .bendy-corner { width: 80px; height: 80px; }
+            .ink-drip { width: 40px; height: 150px; }
+        }
+
+        @media (max-width: 480px) {
+            .navbar { gap: 5px; }
+            .nav-button { font-size: 10px; padding: 5px 8px; }
+            .language-button { font-size: 10px; padding: 3px 6px; }
+            .flag { width: 14px; height: 10px; }
+            .title { height: 250px; }
+            .section-title { font-size: 24px; } .section-text { font-size: 16px; }
+            .carousel-button { width: 40px; height: 40px; font-size: 16px; }
+            .download-button { font-size: 18px; padding: 18px 20px; }
+            .requirement-title { font-size: 18px; } .requirement-value { font-size: 14px; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .content-container { width: 90%; }
+            .section-title { font-size: 36px; } .section-text { font-size: 28px; }
+            .title { height: 500px; }
+            .system-requirements { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Ink drip animations - улучшенные -->
+    <div class="ink-drip"></div>
+    <div class="ink-drip"></div>
+    <div class="ink-drip"></div>
+    <div class="ink-drip"></div>
+
+    <!-- Corner decorations -->
+    <div class="bendy-corner corner-tl"></div>
+    <div class="bendy-corner corner-tr"></div>
+    <div class="bendy-corner corner-bl"></div>
+    <div class="bendy-corner corner-br"></div>
+
+    <!-- Page turn effect -->
+    <div class="page-turn" onclick="scrollToTop()">↑</div>
+
+    <nav class="navbar">
+        <a href="#about" class="nav-button">О нас</a>
+        <a href="#description" class="nav-button">Описание</a>
+        <a href="#screenshots" class="nav-button">Скриншоты</a>
+        <a href="#download" class="nav-button">Скачать</a>
+        <a href="https://joeydrewstudios.com" class="nav-button" target="_blank">Joey Drew Studios</a>
+        
+        <div class="language-switcher">
+            <button class="language-button active" onclick="changeLanguage('ru')">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5IDYiPjxyZWN0IHdpZHRoPSI5IiBoZWlnaHQ9IjIiIGZpbGw9IiNmZmYiLz48cmVjdCB5PSIyIiB3aWR0aD0iOSIgaGVpZ2h0PSIyIiBmaWxsPSIjMDAzOGE3Ii8+PHJlY3QgeT0iNCIgd2lkdGg9IjkiIGhlaWdodD0iMiIgZmlsbD0iI2Q1MDE1MyIvPjwvc3ZnPg==" class="flag" alt="RU">
+                RU
+            </button>
+            <button class="language-button" onclick="changeLanguage('en')">
+                <img src="Flag For Flag Us Outlying Islands SVG Icon.svg" class="flag" alt="US">
+                EN
+            </button>
+        </div>
+    </nav>
+
+    <div class="title"></div>
+    <div class="top-fade"></div>
+    
+    <div class="content-container">
+        <div class="scroll-indicator" onclick="scrollToSection('description')"></div>
+
+        <div class="ink-splash" id="description">
+            <p class="section-title" style="margin-top: 0;">Что из себя представляет Bendy: Down To The Inks?</p>
+            <p class="section-text">Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="ink-splash">
+            <p class="section-title">Лор игры</p>
+            <p class="section-text">Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="ink-splash">
+            <p class="section-title">Геймплей</p>
+            <p class="section-text">Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="ink-splash">
+            <p class="section-title">Системные требования</p>
+            <div class="system-requirements">
+                <div class="requirement-item"><div class="requirement-title">💻 Операционная система</div><div class="requirement-value">Windows 10 / 11 (64-bit)</div></div>
+                <div class="requirement-item"><div class="requirement-title">⚡ Процессор</div><div class="requirement-value">Intel Core i5-11600K<br>или AMD Ryzen 5 5600X</div></div>
+                <div class="requirement-item"><div class="requirement-title">🎮 Видеокарта</div><div class="requirement-value">NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT</div></div>
+                <div class="requirement-item"><div class="requirement-title">💾 Оперативная память</div><div class="requirement-value">8 GB RAM</div></div>
+                <div class="requirement-item"><div class="requirement-title">💿 Место на диске</div><div class="requirement-value">5 GB свободного места</div></div>
+                <div class="requirement-item"><div class="requirement-title">🎯 Производительность</div><div class="requirement-value">~80 FPS на высоких настройках</div></div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="ink-splash">
+            <p class="section-title">Примечание</p>
+            <p class="section-text">На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*</p>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <div class="ink-splash" id="screenshots">
+            <p class="section-title">Скриншоты</p>
+            <div class="screenshots-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack"></div>
+                    <button class="carousel-button carousel-prev" onclick="prevSlide()">❮</button>
+                    <button class="carousel-button carousel-next" onclick="nextSlide()">❯</button>
+                </div>
+                <div class="carousel-dots" id="carouselDots"></div>
+            </div>
+        </div>
+
+        <div class="ink-splash" id="download">
+            <a href="#" class="download-button" onclick="downloadGame(event)">СКАЧАТЬ БИЛД</a>
+        </div>
+    </div>
+
+    <div class="image-modal" id="imageModal">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <img class="modal-image" id="modalImage" src="" alt="Увеличенный скриншот">
+        <div class="zoom-info" id="zoomInfo">Колесико мыши для масштабирования • Клик для закрытия</div>
+    </div>
+
+    <script>
+        // Конфигурация
+        const config = {
+            screenshots: [
+                '2025-11-07_13-07-33-photoaidcom-darken%20(1).png',
+                '2025-11-09_03-42-35.png',
+                '2025-11-09_03-43-50.png',
+                '2025-11-09_03-44-54.png',
+                '2025-11-09_03-52-45.png',
+                '2025-11-09_04-01-27.png',
+                '2025-11-09_04-02-10.png',
+                '2025-11-09_04-04-05.png',
+                '2025-11-09_05-35-34.png'
+            ],
+            zipFile: 'game-build.zip',
+            texts: {
+                ru: {
+                    nav: ['О нас', 'Описание', 'Скриншоты', 'Скачать'],
+                    sections: [
+                        ['Что из себя представляет Bendy: Down To The Inks?', 'Если коротко - Bendy: Down To The Inks - наша фанатская игра по оригинальной увлекательной и атмосферной вселенной "Bendy and the ink machine", созданной <span class="highlight">Joey Drew Studios</span>, в ней вас ждут уже полюбившиеся многим по оригинальной серии головоломки, загадки, антагонисты, и разумеется та самая атмосфера!'],
+                        ['Лор игры', 'Главный герой - Эдвард, будучи исследователем заброшенных помещений натыкается на уже обветшалую квартиру <span class="highlight">Джоуи Дрю</span> из концовки первой части оригинальной вселенной. В попытках открыть ту самую дверь, ведущую в анимационную студию частично перезапускает основной цикл фигурировавший в 2 оригинальных частях, из за чего попадает в уже заброшенную локацию студии, где ему на пути к выходу предстоит пройти через множество разнообразных опасных и смертельных препятствий, среди которых, если не повезет, может оказаться и всеми известный <span class="highlight">Чернильный Демон</span>, однако хватит ли усилий героя чтобы выйти из цикла и покинуть зловещую студию?'],
+                        ['Геймплей', 'Ищите различные предметы, Отбивайтесь от монстров разного уровня силы, Разбивайте препятствия в виде различных досок и прочей фурнитуры, Взаимодействуйте с различными механизмами для достижения своих целей, И разумеется, постарайтесь не умереть по пути...'],
+                        ['Системные требования', ['💻 Операционная система', '⚡ Процессор', '🎮 Видеокарта', '💾 Оперативная память', '💿 Место на диске', '🎯 Производительность'], ['Windows 10 / 11 (64-bit)', 'Intel Core i5-11600K<br>или AMD Ryzen 5 5600X', 'NVIDIA RTX 3060<br>или AMD Radeon RX 6600 XT', '16 GB RAM', '15 GB свободного места', '~80 FPS на высоких настройках']],
+                        ['Примечание', 'На данный момент игра находится на раннем этапе разработки. Вы можете скачать уже имеющиеся билды, но там могут быть СПОЙЛЕРЫ! все на ваш страх и риск. *Скачать билды можно <span class="highlight">внизу страницы</span>*'],
+                        ['Скриншоты']
+                    ],
+                    download: 'СКАЧАТЬ БИЛД',
+                    modal: ['Два пальца для масштабирования • Касание для закрытия', 'Колесико мыши для масштабирования • Клик для закрытия'],
+                    success: 'Скачивание началось! Проверьте папку "Загрузки".'
+                },
+                en: {
+                    nav: ['About', 'Description', 'Screenshots', 'Download'],
+                    sections: [
+                        ['What is Bendy: Down To The Inks?', 'In short - Bendy: Down To The Inks is our fan game based on the original captivating and atmospheric universe of "Bendy and the ink machine" created by <span class="highlight">Joey Drew Studios</span>. It features puzzles, mysteries, antagonists, and of course that iconic atmosphere that many have come to love from the original series!'],
+                        ['Game Lore', 'The main character - Edward, being an explorer of abandoned places, comes across the already dilapidated apartment of <span class="highlight">Joey Drew</span> from the ending of the first part of the original universe. While trying to open that very door leading to the animation studio, he partially restarts the main cycle that appeared in the 2 original parts, which causes him to end up in the already abandoned studio location. On his way to the exit, he will have to go through many different dangerous and deadly obstacles, among which, if he is unlucky, may be the well-known <span class="highlight">Ink Demon</span>. But will the hero have enough strength to break out of the cycle and leave the sinister studio?'],
+                        ['Gameplay', 'Search for various items, Fight back against monsters of different strength levels, Break through obstacles in the form of various boards and other furnishings, Interact with various mechanisms to achieve your goals, And of course, try not to die along the way...'],
+                        ['System Requirements', ['💻 Operating System', '⚡ Processor', '🎮 Graphics Card', '💾 RAM', '💿 Storage', '🎯 Performance'], ['Windows 10 / 11 (64-bit)', 'Intel Core i5-11600K<br>or AMD Ryzen 5 5600X', 'NVIDIA RTX 3060<br>or AMD Radeon RX 6600 XT', '16 GB RAM', '15 GB available space', '~80 FPS on high settings']],
+                        ['Note', 'The game is currently in early development. You can download the available builds, but they may contain SPOILERS! Everything is at your own risk. *You can download builds <span class="highlight">at the bottom of the page</span>*'],
+                        ['Screenshots']
+                    ],
+                    download: 'DOWNLOAD BUILD',
+                    modal: ['Two fingers to zoom • Tap to close', 'Mouse wheel to zoom • Click to close'],
+                    success: 'Download started! Check your "Downloads" folder.'
+                }
+            }
+        };
+
+        // Глобальные переменные
+        let currentSlide = 0, currentScale = 1, translateX = 0, translateY = 0, initialDistance = null;
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+                initCarousel();
+                initSmoothScroll();
+            }, 100);
+        });
+
+        window.onbeforeunload = () => window.scrollTo(0, 0);
+
+        // Карусель
+        function initCarousel() {
+            const track = document.getElementById('carouselTrack');
+            const dots = document.getElementById('carouselDots');
+            
+            config.screenshots.forEach((screenshot, i) => {
+                track.innerHTML += `<div class="carousel-slide"><img src="${screenshot}" alt="Скриншот ${i+1}" class="carousel-image" onclick="openModal('${screenshot}')"></div>`;
+                dots.innerHTML += `<button class="carousel-dot ${i===0?'active':''}" onclick="goToSlide(${i})"></button>`;
+            });
+        }
+
+        function updateCarousel() {
+            document.getElementById('carouselTrack').style.transform = `translateX(-${currentSlide * 100}%)`;
+            document.querySelectorAll('.carousel-dot').forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
+        }
+
+        function nextSlide() { currentSlide = (currentSlide + 1) % config.screenshots.length; updateCarousel(); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + config.screenshots.length) % config.screenshots.length; updateCarousel(); }
+        function goToSlide(index) { currentSlide = index; updateCarousel(); }
+
+        // Модальное окно
+        function openModal(src) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImage');
+            const zoom = document.getElementById('zoomInfo');
+            
+            img.src = src;
+            img.style.transform = 'scale(1) translate(0, 0)';
+            modal.classList.add('active');
+            currentScale = 1; translateX = 0; translateY = 0;
+            
+            const isMobile = window.innerWidth <= 768;
+            const lang = document.querySelector('.language-button.active').textContent.trim() === 'EN' ? 'en' : 'ru';
+            zoom.textContent = config.texts[lang].modal[isMobile ? 0 : 1];
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Зум изображения
+        document.getElementById('modalImage').addEventListener('wheel', e => {
+            e.preventDefault();
+            const delta = -e.deltaY * 0.1;
+            currentScale = Math.max(0.5, Math.min(3, currentScale + delta));
+            e.target.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+        });
+
+        document.getElementById('imageModal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        // Touch events
+        const modalImg = document.getElementById('modalImage');
+        modalImg.addEventListener('touchstart', e => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                initialDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+            }
+        });
+
+        modalImg.addEventListener('touchmove', e => {
+            if (e.touches.length === 2) {
+                e.preventDefault();
+                const currentDistance = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY);
+                if (initialDistance !== null) {
+                    const scaleChange = (currentDistance - initialDistance) * 0.01;
+                    currentScale = Math.max(0.5, Math.min(3, currentScale + scaleChange));
+                    modalImg.style.transform = `scale(${currentScale}) translate(${translateX}px, ${translateY}px)`;
+                    initialDistance = currentDistance;
+                }
+            }
+        });
+
+        modalImg.addEventListener('touchend', () => { initialDistance = null; });
+
+        // Навигация
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Скачивание
+        function downloadGame(e) {
+            e.preventDefault();
+            const btn = e.target;
+            const originalText = btn.textContent;
+            
+            btn.classList.add('loading');
+            btn.textContent = btn.textContent.includes('DOWNLOAD') ? 'PREPARING...' : 'ПОДГОТОВКА...';
+            
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = config.zipFile;
+                link.download = 'Bendy_Down_To_The_Inks_Build.zip';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                btn.classList.remove('loading');
+                btn.textContent = originalText;
+                showDownloadSuccess();
+            }, 2000);
+        }
+
+        function showDownloadSuccess() {
+            const lang = document.querySelector('.language-button.active').textContent.trim() === 'EN' ? 'en' : 'ru';
+            const msg = document.createElement('div');
+            msg.textContent = config.texts[lang].success;
+            Object.assign(msg.style, {
+                position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                background: 'rgba(0, 0, 0, 0.9)', color: 'var(--text-color)', padding: '20px 30px',
+                border: '2px solid var(--border-color)', borderRadius: '10px', fontSize: '18px',
+                zIndex: '10000', textAlign: 'center', boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
+                fontFamily: 'Special Elite, cursive'
+            });
+            
+            document.body.appendChild(msg);
+            setTimeout(() => document.body.removeChild(msg), 3000);
+        }
+
+        // Смена языка
+        function changeLanguage(lang) {
+            document.querySelectorAll('.language-button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const texts = config.texts[lang];
+            const navButtons = document.querySelectorAll('.nav-button');
+            
+            texts.nav.forEach((text, i) => {
+                if (navButtons[i]) navButtons[i].textContent = text;
+            });
+            
+            document.querySelectorAll('.ink-splash').forEach((section, i) => {
+                const title = section.querySelector('.section-title');
+                const content = section.querySelector('.section-text');
+                const requirements = section.querySelectorAll('.requirement-item');
+                
+                if (title) title.textContent = texts.sections[i][0];
+                if (content) content.innerHTML = texts.sections[i][1];
+                
+                if (requirements.length > 0) {
+                    requirements.forEach((req, j) => {
+                        req.querySelector('.requirement-title').textContent = texts.sections[i][1][j];
+                        req.querySelector('.requirement-value').innerHTML = texts.sections[i][2][j];
+                    });
+                }
+            });
+            
+            document.querySelector('.download-button').textContent = texts.download;
+            
+            if (document.getElementById('imageModal').classList.contains('active')) {
+                const isMobile = window.innerWidth <= 768;
+                document.getElementById('zoomInfo').textContent = texts.modal[isMobile ? 0 : 1];
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
